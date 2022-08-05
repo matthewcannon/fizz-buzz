@@ -1,5 +1,7 @@
 package org.fizzbuzz;
 
+import java.util.stream.IntStream;
+
 public final class FizzBuzz {
     private final LineWriter lineWriter;
 
@@ -8,17 +10,11 @@ public final class FizzBuzz {
     }
 
     public void execute(int start, int end) {
-        int i = start;
-        while (i <= end) {
-            if (i % 3 == 0) {
-                lineWriter.writeLine("Fizz");
-            } else if (i % 5 == 0) {
-                lineWriter.writeLine("Buzz");
-            } else {
-                lineWriter.writeLine(i);
-            }
-
-            ++i;
-        }
+        IntStream.rangeClosed(start, end)
+                .mapToObj(
+                        i -> i % 3 == 0 ?
+                                (i % 5 == 0 ? "FizzBuzz" : "Fizz") :
+                                (i % 5 == 0 ? "Buzz" : i))
+                .forEach(lineWriter::writeLine);
     }
 }
